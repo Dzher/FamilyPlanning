@@ -44,21 +44,36 @@ Gender Human::gender() {
 
 Human* HumanMaker::born(Gender gender) {
     gender_ = gender;
-    return new Human(*this);
+    if (Gender::None == gender_) {
+        alive_ = false;
+    }
+
+    if (alive_) {
+        return new Human(*this);
+    }
+    return nullptr;
 }
 
 HumanMaker& HumanMaker::setAge(float age) {
-    age_ = age;
+    if (age > 0 && age <= 1) {
+        age_ = age;
+    }
     return *this;
 }
 
 HumanMaker& HumanMaker::setHeight(float height) {
     height_ = height;
+    if (height_ < 25.0 || height_ > 65.0) {
+        alive_ = false;
+    }
     return *this;
 }
 
 HumanMaker& HumanMaker::setWeight(float weight) {
     weight_ = weight;
+    if (weight_ < 2.0 || weight_ > 5.0) {
+        alive_ = false;
+    }
     return *this;
 }
 

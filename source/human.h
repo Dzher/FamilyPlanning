@@ -15,6 +15,7 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 enum class Gender
 {
+    None,
     Male,
     Female
 };
@@ -30,9 +31,10 @@ public:
     bool grown();
     Gender gender();
 
-protected:
+private:
     explicit Human(HumanMaker& maker);
     HumanMaker* maker_;
+
     friend class HumanMaker;
 };
 
@@ -46,11 +48,12 @@ public:
     HumanMaker& setAlive(bool alive);
 
 private:
-    float age_;
-    float height_;
-    float weight_;
-    bool alive_;
-    bool grown_;
-    Gender gender_;
+    float age_ = 0.0;      //year
+    float height_ = 48.0;  //cm
+    float weight_ = 2.80;  //kg
+    bool grown_ = false;   //18+
+    bool alive_ = true;
+    Gender gender_{Gender::None};  //Any serious country recognizes only two genders: male and female
+
     friend class Human;
 };
