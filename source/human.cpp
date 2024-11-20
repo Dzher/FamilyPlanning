@@ -15,11 +15,22 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "human.h"
 
+#include <ctime>
+
 Human::Human(HumanMaker& maker) : maker_(&maker) {
 }
 
 float Human::age() {
-    return maker_->age_;
+    time_t now = time(0);
+    tm* ltm = localtime(&now);
+
+    int current_year = ltm->tm_year + 1900;
+    int current_month = ltm->tm_mon + 1;
+    int current_day = ltm->tm_mday;
+
+    int age_months = (current_year * 12 + current_month) - (maker_->birth_day_.year * 12 + maker_->birth_day_.month);
+
+    return static_cast<float>(age_months) / 12.f;
 }
 
 float Human::height() {
@@ -42,7 +53,8 @@ Gender Human::gender() {
     return maker_->gender_;
 }
 
-Human* HumanMaker::born(Gender gender) {
+Human* HumanMaker::born(Date birth_day, Gender gender) {
+    birth_day_ = birth_day;
     gender_ = gender;
     if (Gender::None == gender_) {
         alive_ = false;
@@ -52,13 +64,6 @@ Human* HumanMaker::born(Gender gender) {
         return new Human(*this);
     }
     return nullptr;
-}
-
-HumanMaker& HumanMaker::setAge(float age) {
-    if (age > 0 && age <= 1) {
-        age_ = age;
-    }
-    return *this;
 }
 
 HumanMaker& HumanMaker::setHeight(float height) {

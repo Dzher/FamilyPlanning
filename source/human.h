@@ -20,10 +20,18 @@ enum class Gender
     Female
 };
 
+struct Date
+{
+    int year;
+    int month;
+    int day;
+};
+
 class HumanMaker;
 class Human
 {
 public:
+    Date birthDay();
     float age();
     float height();
     float weight();
@@ -41,19 +49,19 @@ private:
 class HumanMaker
 {
 public:
-    Human* born(Gender gender);
+    Human* born(Date birth_day, Gender gender);
     HumanMaker& setAge(float age);
     HumanMaker& setHeight(float height);
     HumanMaker& setWeight(float weight);
     HumanMaker& setAlive(bool alive);
 
 private:
-    float age_ = 0.0;      //year
-    float height_ = 48.0;  //cm
-    float weight_ = 2.80;  //kg
-    bool grown_ = false;   //18+
+    Date birth_day_{};
+    float height_ = 48.0;  // cm
+    float weight_ = 2.80;  // kg
+    bool grown_ = false;   // 18+
     bool alive_ = true;
-    Gender gender_{Gender::None};  //Any serious country recognizes only two genders: male and female
+    Gender gender_{Gender::None};  // Any serious country recognizes only two genders: male and female
 
     friend class Human;
 };

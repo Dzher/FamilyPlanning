@@ -2,10 +2,9 @@
 #include <ios>
 #include <iostream>
 
-
 int main(int, char**) {
     std::cout << "##################### START TEST HUMAN ###################\n";
-    Human* man = HumanMaker().setAge(0.9).setHeight(45).setWeight(2.8).born(Gender::Male);
+    Human* man = HumanMaker().setHeight(45).setWeight(2.8).born({1995, 4, 18}, Gender::Male);
 
     if (!man) {
         return -1;
